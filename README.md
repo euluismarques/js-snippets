@@ -1,2 +1,2 @@
-# js-snippets
+# JS Snippets
 Useful helper functions for many possible applications

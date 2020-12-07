@@ -23,6 +23,22 @@ copyObject = (obj) => {
 };
 
 /**
+ * Original Fisher–Yates forward shuffle algorithm
+ * Shuffles the given array
+ * @param {Array} `a` an array containing items
+ */
+shuffle = (a) => {
+	return a.reduce((_l, _e, i) => {
+		var j = Math.floor(Math.random() * (a.length - i) + i); // j is in [i, a.length[
+
+		var _ref = [a[j], a[i]];
+		a[i] = _ref[0];
+		a[j] = _ref[1];
+		return a;
+	}, a);
+};
+
+/**
  * Shuffles the array `a` without moving the element which are set to true in `f`
  * @link https://codereview.stackexchange.com/questions/196493/shuffling-an-array-keeping-some-elements-fixed
  *
@@ -34,14 +50,13 @@ copyObject = (obj) => {
  * @param {Array} `a` an array containing the items' value
  * @param {Object} `f` an array containing the items' state
  */
-var fixedShuffleIndex = function fixedShuffleIndex(a, f) {
+fixedShuffleIndex = (a, f) => {
 	list = a.reduce(
-		function (acc, e, i) {
+		(acc, e, i) => {
 			if (!f[i]) {
 				acc.pos.push(i);
 				acc.unfixed.push(e);
 			}
-
 			return acc;
 		},
 		{
@@ -50,7 +65,5 @@ var fixedShuffleIndex = function fixedShuffleIndex(a, f) {
 		}
 	);
 	list.pos = shuffle(list.pos);
-	return a.map(function (e, i) {
-		return f[i] ? e : list.unfixed[list.pos.indexOf(i)];
-	});
+	return a.map((e, i) => (f[i] ? e : list.unfixed[list.pos.indexOf(i)]));
 };

@@ -67,3 +67,22 @@ fixedShuffleIndex = (a, f) => {
 	list.pos = shuffle(list.pos);
 	return a.map((e, i) => (f[i] ? e : list.unfixed[list.pos.indexOf(i)]));
 };
+
+/**
+ * Format bytes to readable string
+ * @link https://stackoverflow.com/a/18650828
+ * @param {Number} bytes
+ * @param {Number} decimals
+ * @param {String} space
+ */
+formatBytes = (bytes, decimals = 2, space = " ") => {
+	if (bytes === 0) return "0 Bytes";
+
+	const k = 1024;
+	const dm = decimals < 0 ? 0 : decimals;
+	const sizes = ["Bytes", "KB", "MB", "GB", "TB", "PB", "EB", "ZB", "YB"];
+
+	const i = Math.floor(Math.log(bytes) / Math.log(k));
+
+	return parseFloat((bytes / Math.pow(k, i)).toFixed(dm)) + space + sizes[i];
+};
